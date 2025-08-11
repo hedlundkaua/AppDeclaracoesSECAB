@@ -9,6 +9,20 @@ import os
 def abrir_tela():
 
     locale.setlocale(locale.LC_TIME, "pt_BR.UTF-8")
+    # pega o texto sem barras, até 8 caracteres
+    def formatar_data(event, entry): 
+        texto = entry.get().replace("/", "")[:8] #[:8] limita o texto a 8 caracteres
+        #entry.get() pega o texto atual do campo, replace("/", "") remove as barras que o usuario ja digitou para evitar duplicar barras
+        formatado = ""
+
+        # para percorrer cada caractere do texto
+        for i, c in enumerate(texto): 
+            if i ==2 or i == 4: #quando o i 2 ou 4 (depois do dia e do mes) ele adiciona a barra 
+                formatado += "/"
+            formatado += c
+        entry.delete(0, tk.END)
+        entry.insert(0, formatado)
+
 
     def gerar_documento():
         try:
@@ -20,6 +34,7 @@ def abrir_tela():
             pagina = entry_pagina.get()
             dataInicioExe = entry_exercicio.get()
             setorAtual = entry_setor.get()
+            genero = genero_var.get()
 
             #caminho do modelo
             modelo_path = r"W:\DRH\SECAB\Kaua Teste\modelos\declaracao_vinculo.docx"
@@ -46,7 +61,8 @@ def abrir_tela():
                 "dataInicioExercicio": dataInicioExe,
                 "setorAtual": setorAtual,
                 "classe": classe,
-                "data": data_arquivo 
+                "data": data_arquivo,
+                "genero": genero
             }
 
             data_hoje = datetime.now().strftime("%d-%M-%Y")
@@ -85,9 +101,15 @@ def abrir_tela():
     entry_classe = tk.Entry(janela, width=40)
     entry_classe.grid(row=3, column=1)
 
+    # Data da publicação
     tk.Label(janela, text="Data da publicação:").grid(row=4, column=0, sticky="e")
-    entry_publicacao = tk.Entry(janela, width=40)
-    entry_publicacao.grid(row=4, column=1)
+    entry_publicacao = tk.Entry(janela, width=40) #onde o usuario vai digitar
+    entry_publicacao.grid(row=4, column=1) 
+    # o bind("<KeyRelease>",) significa que toda vez que o usuario soltar uma tecla dentro desse campo vai chamar a função formatar_data
+    entry_publicacao.bind("<KeyRelease>", lambda event: formatar_data(event, entry_publicacao))
+    #passamos o proprio evento do teclado(event) e a referentcia do campo para a função.
+    #event = objeto que representa o evento do teclado que acabou de acontecer.
+    #assim, a função pega o texto digitado até o momento e aplica a formatação automaticamente.
 
     tk.Label(janela, text="Página:").grid(row=5, column=0, sticky="e")
     entry_pagina = tk.Entry(janela, width=40)
@@ -96,12 +118,19 @@ def abrir_tela():
     tk.Label(janela, text="Inicio do Exercicio:").grid(row=6, column=0, sticky="e")
     entry_exercicio = tk.Entry(janela, width=40)
     entry_exercicio.grid(row=6, column=1)
+    entry_exercicio.bind("<KeyRelease>", lambda event: formatar_data(event, entry_exercicio))
 
     tk.Label(janela, text="Setor Atual:").grid(row=7, column=0, sticky="e")
     entry_setor = tk.Entry(janela, width=40)
     entry_setor.grid(row=7, column=1)
 
+    # genero com radiusButtons
+    genero_var = tk.StringVar(value="Masculino") # valor padrão
+    tk.Label(janela, text="Genero:").grid(row=9, column=0, sticky="e")
+    tk.Radiobutton(janela, text="Masculino", variable=genero_var, value="Masculino").grid(row=9, column=1, sticky="w")
+    tk.Radiobutton(janela, text="Feminino", variable=genero_var, value="Feminino").grid(row=10, column=1, sticky="w")
+
     bnt_gerar = tk.Button(janela, text="Gerar Documento", command=gerar_documento)
-    bnt_gerar.grid(row=8, column=0, columnspan=2, pady=10)
+    bnt_gerar.grid(row=12, column=0, columnspan=2, pady=10)
 
     janela.mainloop()

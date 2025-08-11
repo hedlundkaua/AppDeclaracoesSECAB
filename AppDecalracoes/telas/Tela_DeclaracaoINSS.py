@@ -99,6 +99,6 @@ def abrir_tela():
     tk.Radiobutton(janela, text="Feminino", variable=genero_var, value="Feminino").grid(row=7, column=1, sticky="w")
 
     btn_gerar = tk.Button(janela, text="Gerar Documento", command=gerar_documento)
-    btn_gerar.grid(row=5, column=0, columnspan=2, pady=10)
+    btn_gerar.grid(row=8, column=0, columnspan=2, pady=10)
 
     janela.mainloop()
