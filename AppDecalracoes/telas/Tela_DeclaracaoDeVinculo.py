@@ -111,6 +111,7 @@ def abrir_tela():
     #event = objeto que representa o evento do teclado que acabou de acontecer.
     #assim, a função pega o texto digitado até o momento e aplica a formatação automaticamente.
 
+
     tk.Label(janela, text="Página:").grid(row=5, column=0, sticky="e")
     entry_pagina = tk.Entry(janela, width=40)
     entry_pagina.grid(row=5, column=1)
