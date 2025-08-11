@@ -11,3 +11,17 @@ def formatar_data(event, entry):
             formatado += c
         entry.delete(0, tk.END)
         entry.insert(0, formatado)
+
+
+
+def formatar_cpf(event, entry):
+     texto = entry.get().replace(".", "").replace("-", "")[:11]
+     formato = ""
+     for i, c in enumerate(texto):
+        if i == 3 or i == 6:
+             formato += "."
+        if i == 9:
+            formato += "-"
+        formato += c
+        entry.delete(0, tk.END)
+        entry.insert(0, formato)     

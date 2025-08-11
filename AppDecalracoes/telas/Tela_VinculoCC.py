@@ -4,6 +4,9 @@ from tkinter import messagebox
 from docxtpl import DocxTemplate
 from datetime import datetime
 import formatarData as fd
+import locale
+
+locale.setlocale(locale.LC_TIME, "pt_BR.UTF-8")
 
 def abrir_modelo():
     def gerar_documento():
@@ -60,33 +63,33 @@ def abrir_modelo():
     janela = tk.Tk()
     janela.title("Declaração de Vinculo CC")
 
-    tk.Label(janela, text="Nome ").grid(row=0, column=0, sticky="e")
+    tk.Label(janela, text="Nome: ").grid(row=0, column=0, sticky="e")
     entry_nome = tk.Entry(janela, width=40)
     entry_nome.grid(row=0, column=1)
 
-    tk.Label(janela, text="id ").grid(row=1, column=0, sticky="e")
+    tk.Label(janela, text="id: ").grid(row=1, column=0, sticky="e")
     entry_id = tk.Entry(janela, width=40)
     entry_id.grid(row=1, column=1)
 
-    tk.Label(janela, text="Cargo Atual ").grid(row=2, column=0, sticky="e")
+    tk.Label(janela, text="Cargo Atual: ").grid(row=2, column=0, sticky="e")
     entry_cargoAtual = tk.Entry(janela, width=40)
     entry_cargoAtual.grid(row=2, column=1)
 
-    tk.Label(janela, text="Data da Publicação ").grid(row=3, column=0, sticky="e")
+    tk.Label(janela, text="Data da Publicação: ").grid(row=3, column=0, sticky="e")
     entry_dataPublicacao = tk.Entry(janela, width=40)
     entry_dataPublicacao.grid(row=3, column=1)
     entry_dataPublicacao.bind("<KeyRelease>", lambda event: fd.formatar_data(event, entry_dataPublicacao))
 
-    tk.Label(janela, text="Página ").grid(row=4, column=0, sticky="e")
+    tk.Label(janela, text="Página: ").grid(row=4, column=0, sticky="e")
     entry_pagina = tk.Entry(janela, width=40)
     entry_pagina.grid(row=4, column=1)
 
-    tk.Label(janela, text="Data de Exercício ").grid(row=5, column=0, sticky="e")
+    tk.Label(janela, text="Data de Exercício: ").grid(row=5, column=0, sticky="e")
     entry_dataExe = tk.Entry(janela, width=40)
     entry_dataExe.grid(row=5, column=1)
     entry_dataExe.bind("<KeyRelease>", lambda event: fd.formatar_data(event, entry_dataExe))
 
-    tk.Label(janela, text="Setor Atual ").grid(row=6, column=0, sticky="e")
+    tk.Label(janela, text="Setor Atual: ").grid(row=6, column=0, sticky="e")
     entry_setorAtual = tk.Entry(janela, width=40)
     entry_setorAtual.grid(row=6, column=1)
 

@@ -1,14 +1,15 @@
 import tkinter as tk
 from tkinter import messagebox
 from datetime import datetime
-from telas import Tela_DeclaracaoINSS, Tela_DeclaracaoDeVinculo, Tela_DeclaracaoDeVinculoCC
+from telas import Tela_INSS, Tela_Vinculo, Tela_VinculoCC, Tela_NegativaPADServidorAtivo
 
 
 # dicionario de modelos
 modelos = {
-    "INSS": Tela_DeclaracaoINSS.abrir_tela,
-    "Vinculo": Tela_DeclaracaoDeVinculo.abrir_tela,
-    "Vinculo CC": Tela_DeclaracaoDeVinculoCC.abrir_modelo
+    "INSS": Tela_INSS.abrir_tela,
+    "Vinculo": Tela_Vinculo.abrir_tela,
+    "Vinculo CC": Tela_VinculoCC.abrir_modelo,
+    "Negativa PAD (Servidor Ativo)": Tela_NegativaPADServidorAtivo.abrir_tela
 }
 
 def abrir_modelo(modelo):

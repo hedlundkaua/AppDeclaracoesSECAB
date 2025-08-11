@@ -1,39 +1,26 @@
+import os
 import locale
 import tkinter as tk
+import formatarData as fd
 from tkinter import messagebox
 from datetime import datetime
 from docxtpl import DocxTemplate
-import os
 
 
 def abrir_tela():
 
     locale.setlocale(locale.LC_TIME, "pt_BR.UTF-8")
     # pega o texto sem barras, até 8 caracteres
-    def formatar_data(event, entry): 
-        texto = entry.get().replace("/", "")[:8] #[:8] limita o texto a 8 caracteres
-        #entry.get() pega o texto atual do campo, replace("/", "") remove as barras que o usuario ja digitou para evitar duplicar barras
-        formatado = ""
-
-        # para percorrer cada caractere do texto
-        for i, c in enumerate(texto): 
-            if i ==2 or i == 4: #quando o i 2 ou 4 (depois do dia e do mes) ele adiciona a barra 
-                formatado += "/"
-            formatado += c
-        entry.delete(0, tk.END)
-        entry.insert(0, formatado)
-
 
     def gerar_documento():
         try:
             nome = entry_nome.get()
             id = entry_id.get()
+            cpf = entry_cpf.get()
             cargoAtual = entry_cargo.get()
             classe = entry_classe.get()
             dataDaPublicacao = entry_publicacao.get()
-            pagina = entry_pagina.get()
             dataInicioExe = entry_exercicio.get()
-            setorAtual = entry_setor.get()
             genero = genero_var.get()
 
             #caminho do modelo
@@ -53,13 +40,12 @@ def abrir_tela():
 
             contexto = {
                 "nome": nome,
+                "cpf": cpf,
                 "id": id,
                 "cargoAtual": cargoAtual,
                 "classe": classe,
                 "dataDaPublicacao": dataDaPublicacao,
-                "pagina": pagina,
                 "dataInicioExercicio": dataInicioExe,
-                "setorAtual": setorAtual,
                 "classe": classe,
                 "data": data_arquivo,
                 "genero": genero
@@ -75,7 +61,7 @@ def abrir_tela():
             messagebox.showinfo("Sucesso", f"Documento gerado com sucesso:\n{caminho_saida}")
             janela.destroy()
 
-            if not nome or not id or not cargoAtual or not classe or not dataDaPublicacao or not pagina or not dataInicioExe or not setorAtual:
+            if not nome or not id or not cpf or not cargoAtual or not classe or not dataDaPublicacao or not dataInicioExe:
                 messagebox.showwarning("Campos obrigatórios, por favor preencha todos os campos!")
                 return
 
@@ -85,45 +71,41 @@ def abrir_tela():
     janela = tk.Tk()
     janela.title("Delcaração d Vínculo")
 
-    tk.Label(janela, text="Nome:").grid(row=0, column=0, sticky="e")
+    tk.Label(janela, text="Nome: ").grid(row=0, column=0, sticky="e")
     entry_nome = tk.Entry(janela, width=40)
     entry_nome.grid(row=0, column=1)
 
-    tk.Label(janela, text="ID Funcional:").grid(row=1, column=0, sticky="e")
+    tk.Label(janela, text="ID Funcional: ").grid(row=1, column=0, sticky="e")
     entry_id = tk.Entry(janela, width=40)
     entry_id.grid(row=1, column=1)
 
-    tk.Label(janela, text="Cargo Atual:").grid(row=2, column=0, sticky="e")
-    entry_cargo = tk.Entry(janela, width=40)
-    entry_cargo.grid(row=2, column=1)
+    tk.Label(janela, text="CPF: ").grid(row=2, column=0, sticky="e")
+    entry_cpf = tk.Entry(janela, width=40)
+    entry_cpf.grid(row=2, column=1)
+    entry_cpf.bind("<KeyRelease>", lambda event: fd.formatar_cpf(event, entry_cpf))
 
-    tk.Label(janela, text="Classe:").grid(row=3, column=0, sticky="e")
+    tk.Label(janela, text="Cargo Atual:").grid(row=3, column=0, sticky="e")
+    entry_cargo = tk.Entry(janela, width=40)
+    entry_cargo.grid(row=3, column=1)
+
+    tk.Label(janela, text="Classe:").grid(row=4, column=0, sticky="e")
     entry_classe = tk.Entry(janela, width=40)
-    entry_classe.grid(row=3, column=1)
+    entry_classe.grid(row=4, column=1)
 
     # Data da publicação
-    tk.Label(janela, text="Data da publicação:").grid(row=4, column=0, sticky="e")
+    tk.Label(janela, text="Data da publicação:").grid(row=5, column=0, sticky="e")
     entry_publicacao = tk.Entry(janela, width=40) #onde o usuario vai digitar
-    entry_publicacao.grid(row=4, column=1) 
+    entry_publicacao.grid(row=5, column=1) 
     # o bind("<KeyRelease>",) significa que toda vez que o usuario soltar uma tecla dentro desse campo vai chamar a função formatar_data
-    entry_publicacao.bind("<KeyRelease>", lambda event: formatar_data(event, entry_publicacao))
+    entry_publicacao.bind("<KeyRelease>", lambda event: fd.formatar_data(event, entry_publicacao))
     #passamos o proprio evento do teclado(event) e a referentcia do campo para a função.
     #event = objeto que representa o evento do teclado que acabou de acontecer.
     #assim, a função pega o texto digitado até o momento e aplica a formatação automaticamente.
 
-
-    tk.Label(janela, text="Página:").grid(row=5, column=0, sticky="e")
-    entry_pagina = tk.Entry(janela, width=40)
-    entry_pagina.grid(row=5, column=1)
-
     tk.Label(janela, text="Inicio do Exercicio:").grid(row=6, column=0, sticky="e")
     entry_exercicio = tk.Entry(janela, width=40)
     entry_exercicio.grid(row=6, column=1)
-    entry_exercicio.bind("<KeyRelease>", lambda event: formatar_data(event, entry_exercicio))
-
-    tk.Label(janela, text="Setor Atual:").grid(row=7, column=0, sticky="e")
-    entry_setor = tk.Entry(janela, width=40)
-    entry_setor.grid(row=7, column=1)
+    entry_exercicio.bind("<KeyRelease>", lambda event: fd.formatar_data(event, entry_exercicio))
 
     # genero com radiusButtons
     genero_var = tk.StringVar(value="Masculino") # valor padrão

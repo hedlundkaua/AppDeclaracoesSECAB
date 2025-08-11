@@ -1,23 +1,14 @@
+import os
 import tkinter as tk
+import locale
+import formatarData as fd
 from tkinter import messagebox
 from datetime import datetime
 from docxtpl import DocxTemplate
-import os
+
+locale.setlocale(locale.LC_TIME, "pt_BR.UTF-8")
 
 def abrir_tela():
-
-    def formatar_data(event, entry):
-        texto = entry.get().replace("/", "")[:8]  # remove barras e limita 8 dígitos
-        formatado = ""
-
-        for i, c in enumerate(texto):
-            if i == 2 or i == 4:
-                formatado += "/"
-            formatado += c
-
-        entry.delete(0, tk.END)
-        entry.insert(0, formatado)
-
     def gerar_documento():
         try:
             nome = entry_nome.get() # entry é o objeto que representa a caixa que o usuario vai digitar e guardar na variavel 'nome' que iniciamos 
@@ -44,13 +35,16 @@ def abrir_tela():
 
             doc = DocxTemplate(modelo_path) # se não der a mensagem de erro abrimos o modelo expecificado no "modelo_path"
 
+            data_arquivo = datetime.now().strftime("%d de %B de %Y")
+
             contexto = { #contexto dos placeholders indicados no arquivo word
                 "nome": nome,
                 "id": id_funcional,
                 "dataDoe": data_doe,
                 "dataExe": data_exe,
                 "cargo": cargo,
-                "genero": genero
+                "genero": genero,
+                "data": data_arquivo
             }
 
             data_hoje = datetime.now().strftime("%d-%m-%Y") #cria na data da criação uma string de data nos placehoders
@@ -81,12 +75,12 @@ def abrir_tela():
     tk.Label(janela, text="Data DOE:").grid(row=2, column=0, sticky="e")
     entry_doe = tk.Entry(janela, width=20)
     entry_doe.grid(row=2, column=1)
-    entry_doe.bind("<KeyRelease>", lambda event: formatar_data(event, entry_doe))
+    entry_doe.bind("<KeyRelease>", lambda event: fd.formatar_data(event, entry_doe))
 
     tk.Label(janela, text="Data Exercício:").grid(row=3, column=0, sticky="e")
     entry_exe = tk.Entry(janela, width=20)
     entry_exe.grid(row=3, column=1)
-    entry_exe.bind("<KeyRelease>", lambda event: formatar_data(event, entry_exe))
+    entry_exe.bind("<KeyRelease>", lambda event: fd.formatar_data(event, entry_exe))
 
     tk.Label(janela, text="Setor:").grid(row=4, column=0, sticky="e")
     entry_cargo = tk.Entry(janela, width=20)
