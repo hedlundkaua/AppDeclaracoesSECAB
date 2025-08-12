@@ -8,7 +8,7 @@ import locale
 
 locale.setlocale(locale.LC_TIME, "pt_BR.UTF-8")
 
-def abrir_modelo():
+def abrir_tela():
     def gerar_documento():
         try:
             nome = entry_nome.get()
@@ -19,6 +19,7 @@ def abrir_modelo():
             dataExe = entry_dataExe.get()
             setorAtual = entry_setorAtual.get()
             genero = genero_var.get()
+
 
             caminho_modelo = r"W:\DRH\SECAB\Kaua Teste\modelos\declaracao_vinculo_cc.docx"
             saida_arquivo = r"W:\DRH\SECAB\Kaua Teste\gerados"
@@ -53,12 +54,13 @@ def abrir_modelo():
             messagebox.showinfo("Sucesso", f"Documento gerado com sucesso:\n{caminho_saida}")
             janela.destroy()
 
-            if not nome or not id or not cargoAtual or not dataPublicacao or not pagina or not dataExe or not setorAtual:
+            if (not nome or not id or not cargoAtual or not dataPublicacao 
+                or not pagina or not dataExe or not setorAtual):
                 messagebox.showwarning("Campos obrigatorios , por favor preencha todos os campos!") 
                 return
         except Exception as e:
             messagebox.showerror("Erro", f"Ocorreu um erro:\n{e}")
-            return    
+            return 
 
     janela = tk.Tk()
     janela.title("Declaração de Vinculo CC")

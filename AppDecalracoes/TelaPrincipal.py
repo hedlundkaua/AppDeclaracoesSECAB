@@ -1,15 +1,16 @@
 import tkinter as tk
 from tkinter import messagebox
 from datetime import datetime
-from telas import Tela_INSS, Tela_Vinculo, Tela_VinculoCC, Tela_NegativaPADServidorAtivo
+from telas import Tela_INSS, Tela_Vinculo, Tela_VinculoCC, Tela_NegativaPADServidorAtivo, Tela_NegativaPADServidorInativo
 
 
 # dicionario de modelos
 modelos = {
     "INSS": Tela_INSS.abrir_tela,
     "Vinculo": Tela_Vinculo.abrir_tela,
-    "Vinculo CC": Tela_VinculoCC.abrir_modelo,
-    "Negativa PAD (Servidor Ativo)": Tela_NegativaPADServidorAtivo.abrir_tela
+    "Vinculo CC": Tela_VinculoCC.abrir_tela,
+    "Negativa PAD (Servidor Ativo)": Tela_NegativaPADServidorAtivo.abrir_tela,
+    "Negativa PAD (Servidor Inativo)": Tela_NegativaPADServidorInativo.abrir_tela
 }
 
 def abrir_modelo(modelo):
@@ -21,7 +22,7 @@ def abrir_modelo(modelo):
 
 janela = tk.Tk()
 janela.title("Gerador d declarações")
-janela.geometry("350x250")
+janela.geometry("350x400")
 
 tk.Label(janela, text="Escolha o tipo de declaração: ", font=("Arial", 12)).pack(pady=20)
 
