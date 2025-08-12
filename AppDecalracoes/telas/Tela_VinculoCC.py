@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import messagebox
 from docxtpl import DocxTemplate
 from datetime import datetime
-import formatarData as fd
+import formatarTexto as fd
 import locale
 
 locale.setlocale(locale.LC_TIME, "pt_BR.UTF-8")

@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 from datetime import datetime
-from telas import Tela_INSS, Tela_Vinculo, Tela_VinculoCC, Tela_NegativaPADServidorAtivo, Tela_NegativaPADServidorInativo
+from telas import Tela_INSS, Tela_Vinculo, Tela_VinculoCC, Tela_NegativaPADServidorAtivo, Tela_NegativaPADServidorInativo, Tela_IsencaoDeTaxaRenovacaoCNH
 
 
 # dicionario de modelos
@@ -10,7 +10,8 @@ modelos = {
     "Vinculo": Tela_Vinculo.abrir_tela,
     "Vinculo CC": Tela_VinculoCC.abrir_tela,
     "Negativa PAD (Servidor Ativo)": Tela_NegativaPADServidorAtivo.abrir_tela,
-    "Negativa PAD (Servidor Inativo)": Tela_NegativaPADServidorInativo.abrir_tela
+    "Negativa PAD (Servidor Inativo)": Tela_NegativaPADServidorInativo.abrir_tela,
+    "Isenção de CNH": Tela_IsencaoDeTaxaRenovacaoCNH.abrir_tela
 }
 
 def abrir_modelo(modelo):

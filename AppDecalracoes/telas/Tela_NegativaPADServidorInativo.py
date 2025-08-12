@@ -1,7 +1,7 @@
 import os
 import locale
 import tkinter as tk
-import formatarData as fd
+import formatarTexto as fd
 from tkinter import messagebox
 from datetime import datetime
 from docxtpl import DocxTemplate
@@ -55,7 +55,7 @@ def abrir_tela():
             }
 
             data_hoje = datetime.now().strftime("%d-%M-%Y")
-            nome_arquivo = f"{nome.replace(' ','_')}_declaracao_vinculo {data_hoje}.docx"
+            nome_arquivo = f"{nome.replace(' ','_')}_declaracao_negativaPADServidorInativo {data_hoje}.docx"
             caminho_saida = os.path.join(saida_path, nome_arquivo)
 
             doc.render(contexto) # executa o contexto substituindo os campos do word para os que o usuario informa no app

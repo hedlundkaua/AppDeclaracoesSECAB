@@ -1,7 +1,7 @@
 import os
 import locale
 import tkinter as tk
-import formatarData as fd
+import formatarTexto as fd
 from tkinter import messagebox
 from datetime import datetime
 from docxtpl import DocxTemplate
