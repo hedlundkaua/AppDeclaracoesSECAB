@@ -5,6 +5,7 @@ import formatarTexto as fd
 from tkinter import messagebox
 from datetime import datetime
 from docxtpl import DocxTemplate
+from tkinter import ttk
 
 locale.setlocale(locale.LC_TIME, "pt_BR.UTF-8")
 
@@ -17,6 +18,7 @@ def abrir_tela():
             data_exe = entry_exe.get()
             cargo = entry_cargo.get()
             genero = genero_var.get()
+            servidor_assinador = combo_servidor.get()
             
             if not nome or not id_funcional or not data_doe or not data_exe or not cargo:
                 messagebox.showwarning("Campos obrigatórios", "Por favor, preencha todos os campos.")
@@ -37,6 +39,8 @@ def abrir_tela():
 
             data_arquivo = datetime.now().strftime("%d de %B de %Y")
 
+            dados_assinador = servidores.get(servidor_assinador, {})
+
             contexto = { #contexto dos placeholders indicados no arquivo word
                 "nome": nome,
                 "id": id_funcional,
@@ -51,6 +55,7 @@ def abrir_tela():
             nome_arquivo = f"{nome.replace(' ', '_')}_declaracao_inss {data_hoje}.docx"
             caminho_saida = os.path.join(saida_path, nome_arquivo)
 
+            contexto.update(dados_assinador)
             doc.render(contexto)
             doc.save(caminho_saida)
 
@@ -92,7 +97,28 @@ def abrir_tela():
     tk.Radiobutton(janela, text="Masculino", variable=genero_var, value="Masculino").grid(row=6, column=1, sticky="w")
     tk.Radiobutton(janela, text="Feminino", variable=genero_var, value="Feminino").grid(row=7, column=1, sticky="w")
 
+    servidores = {
+    "Barbara": {
+        "nomeAssinador": "Barbara Lopes de Almeida",
+        "cargoAssinador": "Analista Tributario da Receita Estadual",
+        "classeAssinador": "A",
+        "idAssinador": "123456",
+        "dataPorExtenso": datetime.now().strftime("%d de %B de %Y")
+    },
+    "Juiane": {
+        "nomeAssinador": "Juiane Da Silva Machado",
+        "cargoAssinador": "Analista Tributario da Receita Estadual",
+        "classeAssinador": "D",
+        "idAssinador": "654321",
+        "dataPorExtenso": datetime.now().strftime("%d de %B de %Y")
+    }
+    }
+
+    tk.Label(janela, text="Quem vai assinar:").grid(row=8, column=0, sticky="e")
+    combo_servidor = ttk.Combobox(janela, values=list(servidores.keys()), width= 37)
+    combo_servidor.grid(row=8, column=1)
+
     btn_gerar = tk.Button(janela, text="Gerar Documento", command=gerar_documento)
-    btn_gerar.grid(row=8, column=0, columnspan=2, pady=10)
+    btn_gerar.grid(row=9, column=0, columnspan=2, pady=10)
 
     janela.mainloop()

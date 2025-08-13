@@ -5,6 +5,7 @@ from docxtpl import DocxTemplate
 from datetime import datetime
 import formatarTexto as fd
 import locale
+from tkinter import ttk
 
 locale.setlocale(locale.LC_TIME, "pt_BR.UTF-8")
 
@@ -19,6 +20,7 @@ def abrir_tela():
             dataExe = entry_dataExe.get()
             setorAtual = entry_setorAtual.get()
             genero = genero_var.get()
+            servidor_assinador = combo_servidor.get()
 
 
             caminho_modelo = r"W:\DRH\SECAB\Kaua Teste\modelos\declaracao_vinculo_cc.docx"
@@ -31,6 +33,8 @@ def abrir_tela():
             doc = DocxTemplate(caminho_modelo)
 
             data_arquivo = datetime.now().strftime("%d de %B de %Y")
+
+            dados_assinador = servidores.get(servidor_assinador, {})
 
             informacoes = {
                 "nome": nome,
@@ -48,6 +52,7 @@ def abrir_tela():
             nome_arquivo = f"{nome.replace(' ', '_')}_declaracao_vinculo {data_hoje}.docx"
             caminho_saida = os.path.join(saida_arquivo, nome_arquivo)
 
+            informacoes.update(dados_assinador)
             doc.render(informacoes)
             doc.save(caminho_saida)
 
@@ -99,6 +104,28 @@ def abrir_tela():
     tk.Label(janela, text="Genero:").grid(row=7, column=0, sticky="e")
     tk.Radiobutton(janela, text="Masculino", variable=genero_var, value="Masculino").grid(row=7, column=1, sticky="w")
     tk.Radiobutton(janela, text="Feminino", variable=genero_var, value="Feminino").grid(row=8, column=1, sticky="w")
+
+    servidores = {
+    "Barbara": {
+        "nomeAssinador": "Barbara Lopes de Almeida",
+        "cargoAssinador": "Analista Tributario da Receita Estadual",
+        "classeAssinador": "A",
+        "idAssinador": "123456",
+        "dataPorExtenso": datetime.now().strftime("%d de %B de %Y")
+    },
+    "Juiane": {
+        "nomeAssinador": "Juiane Da Silva Machado",
+        "cargoAssinador": "Analista Tributario da Receita Estadual",
+        "classeAssinador": "D",
+        "idAssinador": "654321",
+        "dataPorExtenso": datetime.now().strftime("%d de %B de %Y")
+    }
+    }
+
+    tk.Label(janela, text="Quem vai assinar:").grid(row=9, column=0, sticky="e")
+    combo_servidor = ttk.Combobox(janela, values=list(servidores.keys()), width= 37)
+    combo_servidor.grid(row=9, column=1)
+
 
     bnt_gerar = tk.Button(janela, text="Gerar documento", command=gerar_documento)
     bnt_gerar.grid(row=10, column=0, columnspan=2, pady=10)
