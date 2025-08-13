@@ -17,6 +17,7 @@ def abrir_tela():
             nome = entry_nome.get()
             id = entry_id.get()
             cpf = entry_cpf.get()
+            nOficio = entry_nOficio.get()
             classe = entry_classe.get()
             rg = entry_rg.get()
             pai = entry_pai.get()
@@ -41,6 +42,7 @@ def abrir_tela():
             data_arquivo = datetime.now().strftime("%d de %B de %Y")
 
             contexto = {
+                "nOficio": nOficio,
                 "nome": nome,
                 "cpf": cpf,
                 "id": id,
@@ -65,7 +67,7 @@ def abrir_tela():
             messagebox.showinfo("Sucesso", f"Documento gerado com sucesso:\n{caminho_saida}")
             janela.destroy()
  
-            if (not nome or not id or not cpf or not classe or not pai or not mae or not rg or not dataNascimento):
+            if (not nome or not id or not cpf or not classe or not pai or not mae or not rg or not dataNascimento or not nOficio):
               messagebox.showwarning("Campos obrigatórios, por favor preencha todos os campos!")
               return
 
@@ -114,6 +116,9 @@ def abrir_tela():
     entry_pai = tk.Entry(janela, width=40)
     entry_pai.grid(row=8, column=1)
 
+    tk.Label(janela, text="N° Oficio:").grid(row=9, column=0, sticky="e")
+    entry_nOficio = tk.Entry(janela, width=40)
+    entry_nOficio.grid(row=9, column=1)
 
     # genero com radiusButtons
     genero_var = tk.StringVar(value="Masculino") # valor padrão
