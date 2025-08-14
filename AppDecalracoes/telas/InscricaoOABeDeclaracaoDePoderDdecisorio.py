@@ -78,7 +78,7 @@ def abrir_tela():
             messagebox.showerror("Erro", f"Ocorreu um erro:\n{e}")
 
     janela = tk.Tk()
-    janela.title("Delcaração d Vínculo")
+    janela.title("Declaração de inscrição OAB")
 
     tk.Label(janela, text="Nome: ").grid(row=0, column=0, sticky="e")
     entry_nome = tk.Entry(janela, width=40)
@@ -140,14 +140,14 @@ def abrir_tela():
         "nomeAssinador": "Barbara Lopes de Almeida",
         "cargoAssinador": "Analista Tributario da Receita Estadual",
         "classeAssinador": "A",
-        "idAssinador": "123456",
+        "idAssinador": "5047200/01",
         "dataPorExtenso": datetime.now().strftime("%d de %B de %Y")
     },
     "Juiane": {
         "nomeAssinador": "Juiane Da Silva Machado",
         "cargoAssinador": "Analista Tributario da Receita Estadual",
         "classeAssinador": "D",
-        "idAssinador": "654321",
+        "idAssinador": "4349660/01",
         "dataPorExtenso": datetime.now().strftime("%d de %B de %Y")
     }
     }

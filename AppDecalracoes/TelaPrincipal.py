@@ -36,4 +36,3 @@ for modelo in modelos:
     tk.Button(janela, text=modelo, width=35, height=2, command= lambda m = modelo: abrir_modelo(m)).pack(pady=5)
 
 janela.mainloop()
-    

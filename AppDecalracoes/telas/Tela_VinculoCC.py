@@ -4,10 +4,17 @@ from tkinter import messagebox
 from docxtpl import DocxTemplate
 from datetime import datetime
 import formatarTexto as fd
-import locale
 from tkinter import ttk
+import locale
+import sys
 
 locale.setlocale(locale.LC_TIME, "pt_BR.UTF-8")
+
+def caminho_arquivo(nome):
+    """Retorna caminho correto do arquivo, seja no .py ou no .exe"""
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, nome)
+    return os.path.join(os.path.abspath("."), nome)
 
 def abrir_tela():
     def gerar_documento():
@@ -22,9 +29,15 @@ def abrir_tela():
             genero = genero_var.get()
             servidor_assinador = combo_servidor.get()
 
+ 
+            #caminho_modelo = r"W:\DRH\SECAB\Kaua Teste\modelos\declaracao_vinculo_cc.docx" antigo
 
-            caminho_modelo = r"W:\DRH\SECAB\Kaua Teste\modelos\declaracao_vinculo_cc.docx"
+            caminho_modelo = caminho_arquivo("modelos\declaracao_vinculo_cc.docx")
+
             saida_arquivo = r"W:\DRH\SECAB\Kaua Teste\gerados"
+
+            #saida_arquivo = os.path.join(os.path.expanduser("~"), "Documentos", "Gerados")
+            #os.makedirs(saida_arquivo, exist_ok=True)
 
             if not os.path.exists(caminho_modelo):
                 messagebox.showerror("Erro", f"Caminho não encontrado zn{caminho_modelo}")
@@ -110,14 +123,14 @@ def abrir_tela():
         "nomeAssinador": "Barbara Lopes de Almeida",
         "cargoAssinador": "Analista Tributario da Receita Estadual",
         "classeAssinador": "A",
-        "idAssinador": "123456",
+        "idAssinador": "5047200/01",
         "dataPorExtenso": datetime.now().strftime("%d de %B de %Y")
     },
     "Juiane": {
         "nomeAssinador": "Juiane Da Silva Machado",
         "cargoAssinador": "Analista Tributario da Receita Estadual",
         "classeAssinador": "D",
-        "idAssinador": "654321",
+        "idAssinador": "4349660/01",
         "dataPorExtenso": datetime.now().strftime("%d de %B de %Y")
     }
     }

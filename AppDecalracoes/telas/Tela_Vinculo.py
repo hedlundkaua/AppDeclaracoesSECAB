@@ -1,5 +1,4 @@
 import os
-import locale
 import tkinter as tk
 import formatarTexto as fd
 from tkinter import messagebox
@@ -7,10 +6,21 @@ from datetime import datetime
 from docxtpl import DocxTemplate
 from tkinter import ttk
 
-def abrir_tela():
+import locale
+import sys
 
-    locale.setlocale(locale.LC_TIME, "pt_BR.UTF-8")
-    # pega o texto sem barras, até 8 caracteres
+locale.setlocale(locale.LC_TIME, "pt_BR.UTF-8")
+
+def caminho_arquivo(nome):
+    """Retorna caminho correto do arquivo, seja no .py ou no .exe"""
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, nome)
+    return os.path.join(os.path.abspath("."), nome)
+
+
+
+
+def abrir_tela():
 
     def gerar_documento():
         try:
@@ -75,7 +85,7 @@ def abrir_tela():
             messagebox.showerror("Erro", f"Ocorreu um erro:\n{e}")
 
     janela = tk.Tk()
-    janela.title("Delcaração d Vínculo")
+    janela.title("Declaração de Vínculo")
 
     tk.Label(janela, text="Nome:").grid(row=0, column=0, sticky="e")
     entry_nome = tk.Entry(janela, width=40)
@@ -128,14 +138,14 @@ def abrir_tela():
         "nomeAssinador": "Barbara Lopes de Almeida",
         "cargoAssinador": "Analista Tributario da Receita Estadual",
         "classeAssinador": "A",
-        "idAssinador": "123456",
+        "idAssinador": "5047200/01",
         "dataPorExtenso": datetime.now().strftime("%d de %B de %Y")
     },
     "Juiane": {
         "nomeAssinador": "Juiane Da Silva Machado",
         "cargoAssinador": "Analista Tributario da Receita Estadual",
         "classeAssinador": "D",
-        "idAssinador": "654321",
+        "idAssinador": "4349660/01",
         "dataPorExtenso": datetime.now().strftime("%d de %B de %Y")
     }
     }

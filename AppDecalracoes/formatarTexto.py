@@ -13,7 +13,6 @@ def formatar_data(event, entry):
         entry.insert(0, formatado)
 
 
-
 def formatar_cpf(event, entry):
      texto = entry.get().replace(".", "").replace("-", "")[:11]
      formato = ""
