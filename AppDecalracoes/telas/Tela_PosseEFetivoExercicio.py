@@ -7,10 +7,20 @@ from datetime import datetime
 from docxtpl import DocxTemplate
 from tkinter import ttk
 
-def abrir_tela():
+import locale
+import sys
 
-    locale.setlocale(locale.LC_TIME, "pt_BR.UTF-8")
-    # pega o texto sem barras, até 8 caracteres
+# pega o texto sem barras, até 8 caracteres
+locale.setlocale(locale.LC_TIME, "pt_BR.UTF-8")
+
+def caminho_arquivo(nome):
+    """Retorna caminho correto do arquivo, seja no .py ou no .exe"""
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, nome)
+    return os.path.join(os.path.abspath("."), nome)
+
+def abrir_tela():
+  
 
     def gerar_documento():
         try:
@@ -26,7 +36,10 @@ def abrir_tela():
             servidor_assinador = combo_servidor.get()
             
             #caminho do modelo
-            modelo_path = r"W:\DRH\SECAB\Kaua Teste\modelos\Declaracao_PosseEEfetivoExercicio.docx"
+            #modelo_path = r"W:\DRH\SECAB\Kaua Teste\modelos\Declaracao_PosseEEfetivoExercicio.docx"
+
+            modelo_path = caminho_arquivo("modelos\declaracao_vinculo_cc.docx")
+
 
             #caminho de saida
             saida_path = r"W:\DRH\SECAB\Kaua Teste\gerados"

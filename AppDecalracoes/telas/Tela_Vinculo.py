@@ -5,7 +5,6 @@ from tkinter import messagebox
 from datetime import datetime
 from docxtpl import DocxTemplate
 from tkinter import ttk
-
 import locale
 import sys
 
@@ -16,8 +15,6 @@ def caminho_arquivo(nome):
     if hasattr(sys, '_MEIPASS'):
         return os.path.join(sys._MEIPASS, nome)
     return os.path.join(os.path.abspath("."), nome)
-
-
 
 
 def abrir_tela():
@@ -36,7 +33,10 @@ def abrir_tela():
             servidor_assinador = combo_servidor.get()
 
             #caminho do modelo
-            modelo_path = r"W:\DRH\SECAB\Kaua Teste\modelos\declaracao_vinculo.docx"
+            modelo_path = caminho_arquivo("modelos\declaracao_vinculo_cc.docx")
+
+            
+            #modelo_path = r"W:\DRH\SECAB\Kaua Teste\modelos\declaracao_vinculo.docx"
 
             #caminho de saida
             saida_path = r"W:\DRH\SECAB\Kaua Teste\gerados"
@@ -50,7 +50,7 @@ def abrir_tela():
 
             data_arquivo = datetime.now().strftime("%d de %B de %Y")
 
-            dados_assinador = servidores.get(servidor_assinador, {})
+            dados_assinador = servidores.get(servidor_assinador)
 
             contexto = {
                 "nome": nome,
@@ -133,6 +133,7 @@ def abrir_tela():
     tk.Radiobutton(janela, text="Masculino", variable=genero_var, value="Masculino").grid(row=9, column=1, sticky="w")
     tk.Radiobutton(janela, text="Feminino", variable=genero_var, value="Feminino").grid(row=10, column=1, sticky="w")
 
+
     servidores = {
     "Barbara": {
         "nomeAssinador": "Barbara Lopes de Almeida",
@@ -148,6 +149,26 @@ def abrir_tela():
         "idAssinador": "4349660/01",
         "dataPorExtenso": datetime.now().strftime("%d de %B de %Y")
     }
+    }
+
+    regimeFinanceiro = {
+        "Repartição Simples":{
+            "reparticaoSimples": "RPPS-RS - Regime Financeiro de Repartição Simples (Art.2º da LC 13.758/2011)"
+        },
+        "Captialização": {
+            "captalizacao": "RPPS-RS - Regime Financeiro de Capitalização(Art.3º da LC 13.758/2011)"
+        }
+    }
+
+    submetidoAoRegime = {
+        "Sim": {
+            "submetido": "NÃO submetido ao Regime de Previdência Complementar-RS da LC 14.750/2015",
+            "limitador": "sem o limitador previsto no Art.40, §§ 14 e 16, da Constituição Federal."
+        },
+        "Não": {
+            "submetido": "submetido ao Regime de Previdência Complementar-RS da LC 14.750/2015",
+            "limitador": "com o limitador previsto no Art.40, §§ 14 e 16, da Constituição Federal."
+        }
     }
 
     tk.Label(janela, text="Quem vai assinar:").grid(row=11, column=0, sticky="e")

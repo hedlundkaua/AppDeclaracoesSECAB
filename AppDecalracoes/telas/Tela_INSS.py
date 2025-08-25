@@ -6,8 +6,15 @@ from tkinter import messagebox
 from datetime import datetime
 from docxtpl import DocxTemplate
 from tkinter import ttk
+import sys
 
 locale.setlocale(locale.LC_TIME, "pt_BR.UTF-8")
+
+def caminho_arquivo(nome):
+    """Retorna caminho correto do arquivo, seja no .py ou no .exe"""
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, nome)
+    return os.path.join(os.path.abspath("."), nome)
 
 def abrir_tela():
     def gerar_documento():
@@ -25,7 +32,7 @@ def abrir_tela():
                 return
 
             # Caminho do modelo
-            modelo_path = r"W:\DRH\SECAB\Kaua Teste\modelos\declaracao_inss.docx"
+            modelo_path = caminho_arquivo("W:\DRH\SECAB\Kaua Teste\modelos\declaracao_inss.docx")
 
             #caminho da saida
             saida_path = r"W:\DRH\SECAB\Kaua Teste\gerados"
